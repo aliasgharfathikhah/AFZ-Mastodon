@@ -1,0 +1,12 @@
+{
+    "platform": "docker",
+    "packages": {
+        "python": "3.12",
+        "commands": [
+            {
+                "type": "pip",
+                "command": "pip install -r requirements.txt"
+            }
+        ]
+    }
+}
