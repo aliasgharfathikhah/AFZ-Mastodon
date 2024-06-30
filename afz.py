@@ -20,9 +20,14 @@ def get_wikipedia_summary(search_text, lang='en'):
         page = wiki_wiki.page(search_text)
 
         if page.exists():
-            summary = page.summary[:475]
+            url = page.fullurl
+            url_length = len(url)
+            summary_length = 465 - url_length
+            summary = page.summary[:summary_length]
             lines = summary.split('. ')
+            lines += '\n'
             if lines:
+                lines.append(url)
                 return lines
 
         wikipedia.set_lang(lang)
@@ -80,7 +85,7 @@ def run_bot(driver):
                             star_button.click()
                             driver.implicitly_wait(10)
                             replay_button.click()
-                            driver.find_element(By.CLASS_NAME, 'autosuggest-textarea__textarea').send_keys(f' (¬‿¬) {". ".join(lines)}')
+                            driver.find_element(By.CLASS_NAME, 'autosuggest-textarea__textarea').send_keys(f'\n {". ".join(lines)}')
                             driver.implicitly_wait(10)
                             driver.find_element(By.CLASS_NAME, 'compose-form__publish-button-wrapper').click()
                         else:
